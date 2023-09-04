@@ -1,0 +1,60 @@
+{
+  "combinations": [
+    {
+      "id": 1,
+      "timeRange": "8H - 9H"
+    },
+    {
+      "id": 2,
+      "timeRange": "9H - 10H"
+    },
+    {
+      "id": 3,
+      "timeRange": "10H - 11H"
+    },
+    {
+      "id": 4,
+      "timeRange": "11H - 12H"
+    },
+    {
+      "id": 5,
+      "timeRange": "12H - 13H"
+    },
+    {
+      "id": 6,
+      "timeRange": "13H - 14H"
+    },
+    {
+      "id": 7,
+      "timeRange": "14H - 15H"
+    },
+    {
+      "id": 8,
+      "timeRange": "15H - 16H"
+    },
+    {
+      "id": 9,
+      "timeRange": "16H - 17H"
+    },
+    {
+      "id": 10,
+      "timeRange": "17H - 18H"
+    },
+    {
+      "id": 11,
+      "timeRange": "18H - 19H"
+    },
+    {
+      "id": 12,
+      "timeRange": "19H - 20H"
+    },
+    {
+      "id": 13,
+      "timeRange": "20H - 21H"
+    },
+    {
+      "id": 14,
+      "timeRange": "21H - 22H"
+    }
+  ]
+}

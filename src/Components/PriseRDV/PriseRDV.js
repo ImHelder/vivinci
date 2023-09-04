@@ -1,4 +1,5 @@
 import './PriseRDV.css';
+import times from "./time.json";
 
 function PriseRDV() {
     return (
@@ -20,13 +21,9 @@ function PriseRDV() {
                 </select>
                 <input type="date" placeholder="Date" />
                 <select>
-                    {
-                        (() => {
-                            for (let i = 0; i < 240; i+= 30) {
-                                return <option value={i}>{i}</option>
-                            }
-                        })()
-                    }
+                    {times.combinations.map(({id, timeRange}) => {
+                        return <option value={id}>{timeRange}</option>
+                    })}
                 </select>
                 <input type="text" placeholder="Médecin" />
             </div>
@@ -36,7 +33,6 @@ function PriseRDV() {
             <div className="PriseRDV-valider">
                 <p>Choisissez une date</p>
             </div>
-
         </div>
     );
 }
