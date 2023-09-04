@@ -8,9 +8,26 @@ function PriseRDV() {
                 <p>Choisissez une date</p>
                 <input type="text" placeholder="Nom" />
                 <input type="text" placeholder="Prénom" />
-                <input type="text" placeholder="Spécialité" />
+                <select><option value="Cardiologue">Cardiologue</option>
+                    <option value="Généraliste">Généraliste</option>
+                    <option value="Pédiatre">Pédiatre</option>
+                    <option value="Urologue">Urologue</option>
+                    <option value="Neurologue">Neurologue</option>
+                    <option value="Radiologue">Radiologue</option>
+                    <option value="Chiurgien">Chiurgien</option>
+                    <option value="Aide-soignant">Aide-soignant</option>
+                    <option value="Allergologue">Allergologue</option>
+                </select>
                 <input type="date" placeholder="Date" />
-                <input type="time" placeholder="Heure" />
+                <select>
+                    {
+                        (() => {
+                            for (let i = 0; i < 240; i+= 30) {
+                                return <option value={i}>{i}</option>
+                            }
+                        })()
+                    }
+                </select>
                 <input type="text" placeholder="Médecin" />
             </div>
             <div className="PriseRDV-image">
