@@ -4,3 +4,32 @@
     justify-content: center;
     align-items: center;
 }
+
+.oneDemandeInfos {
+    display: flex;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #FB027F;
+    justify-content: space-around;
+    width: 600px;
+}
+
+.status {
+    margin-left: 10px;
+}
+
+.oneDemande {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.medecinInfos {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.dateInfos {
+    font-weight: bold;
+}

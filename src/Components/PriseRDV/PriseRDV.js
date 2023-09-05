@@ -6,13 +6,14 @@ import { collection, getDocs } from 'firebase/firestore'
 import times from "./time.json";
 import AjoutUsersDB from '../AddUsersDB/AddUsersDB';
 
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function PriseRDV() {
     const [speciality, setSpeciality] = React.useState('');
     const [date, setDate] = React.useState('');
     const [time, setTime] = React.useState('');
     const [medecin, setMedecin] = React.useState([]);
+    const [clientId, setClientId] = React.useState('');
 
     const [bcgImage, setBcgImage] = React.useState('/Images/background2.jpg');
 
@@ -74,15 +75,23 @@ function PriseRDV() {
     const resetBackground = () => {
         setBcgImage('/Images/background2.jpg');
     };
+
     const goToSuiviRDV = (event) => {
-        return navigate('/suiviRDV');
+        if(clientId.length < 3) return;
+        return navigate('/suiviRDV', { state: { clientId } });
+    }
+
+    const changeClientId = (event) => {
+        const value = event.target.value;
+        setClientId(value);
+        console.log(value);
     }
 
     return (
         <div className="PriseRDV">
             <div className="header">
                 <div className="demandeContainer">
-                    <input className="inputClient" type="text" placeholder="ID du client" />
+                    <input className="inputClient" type="text" onChange={changeClientId} placeholder="ID du client" />
                     <button className="Demande" onClick={goToSuiviRDV}>Suivi des demandes</button>
                 </div>
                 <div className='PriseRDV-jesuismedecin-Container'>
