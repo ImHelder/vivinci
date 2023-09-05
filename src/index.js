@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PriseRDV from './Components/PriseRDV/PriseRDV';
+import SuiviRDV from './Components/SuiviRDV/SuiviRDV';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,7 @@ root.render(
       <Routes>
         <Route path="/" element={<PriseRDV/>} />
         <Route path="/test" element={<App/>} />
+        <Route path="/suiviRDV" element={<SuiviRDV />} />
       </Routes>
     </Router>
   </React.StrictMode>

@@ -4,6 +4,7 @@ import './PriseRDV.css'
 
 import { collection, addDoc, getDocs } from 'firebase/firestore'
 import times from "./time.json";
+import { redirect, useNavigate } from 'react-router-dom';
 
 function PriseRDV() {
 
@@ -11,6 +12,7 @@ function PriseRDV() {
     const [speciality, setSpeciality] = React.useState('');
     const [date, setDate] = React.useState('');
     const [time, setTime] = React.useState('');
+    const navigate = useNavigate();
 
     React.useEffect(() => {
         (async () => {
@@ -43,9 +45,21 @@ function PriseRDV() {
         setTime(value);
     }
 
+    const goToSuiviRDV = (event) => {
+        return navigate('/suiviRDV');
+    }
+
     return (
         <div className="PriseRDV">
-            <button className="PriseRDV-jesuismedecin">Je suis médecin</button>
+            <div className="header">
+                <div className="demandeContainer">
+                    <input className="inputClient" type="text" placeholder="ID du client" />
+                    <button className="Demande" onClick={goToSuiviRDV}>Suivi des demandes</button>
+                </div>
+                <div className='PriseRDV-jesuismedecin-Container'>
+                    <button className="PriseRDV-jesuismedecin">Je suis médecin</button>
+                </div>
+            </div>
             <div className="PriseRDV-infos">
                 <input className="input" type="text" placeholder="Nom" />
                 <input className="input" type="text" placeholder="Prénom" />
