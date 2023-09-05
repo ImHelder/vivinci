@@ -33,6 +33,7 @@ function PriseRDV() {
 
     const changeDate = (event) => {
         const value = event.target.value;
+        console.log(value);
         setDate(value);
     }
 
