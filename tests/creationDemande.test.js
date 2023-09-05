@@ -1,15 +1,27 @@
 import { describe, expect, test } from '@jest/globals';
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../src/firebaseConfig'
 
-const sum = (a, b) => {
-    return a + b;
+const checkIUserfHasFields = (user) => {
+  return !!user.nom && !!user.spécialité && !!user.dates;
 }
 
-describe('premier ensemble de test', () => {
-    test('adds 1 + 2 to equal 3', () => {
-      expect(sum(1, 2)).toBe(3);
-    });
+describe('fetch medecin', () => {
+  test('fetch all medecin', async () => {
+    const getMedecin = await getDocs(collection(db, 'users'));
+    expect(getMedecin.docs).toHaveLength(9);
+  });
 
-    test('shoudl fail', () => {
-      expect(sum(1, 2)).toBe(5);
-    });
+  test('fetch medecin by speciality Généraliste', async () => {
+    const getMedecin = await getDocs(collection(db, 'users'));
+    const values = getMedecin.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    const newAvailable = values.filter(user => user.spécialité.includes('Généraliste'));
+    expect(newAvailable).toHaveLength(2);
+  });
+
+  test('medecin should have fields', async () => {
+    const getMedecin = await getDocs(collection(db, 'users'));
+    const values = getMedecin.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    return values.map(user => expect(checkIUserfHasFields(user)).toBeTruthy());
+  });
 });

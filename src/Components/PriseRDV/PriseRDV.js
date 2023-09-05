@@ -43,8 +43,6 @@ function PriseRDV() {
         setTime(value);
     }
 
-
-
     return (
         <div className="PriseRDV">
             <button className="PriseRDV-jesuismedecin">Je suis médecin</button>
