@@ -2,29 +2,52 @@ import React from 'react';
 import { db } from '../../firebaseConfig'
 import './PriseRDV.css'
 
-import { collection, addDoc, getDocs } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore'
 import times from "./time.json";
+import AjoutUsersDB from '../AddUsersDB/AddUsersDB';
+
 import { redirect, useNavigate } from 'react-router-dom';
 
 function PriseRDV() {
-
-    const [available, setAvailable] = React.useState([]);
     const [speciality, setSpeciality] = React.useState('');
     const [date, setDate] = React.useState('');
     const [time, setTime] = React.useState('');
+    const [medecin, setMedecin] = React.useState([]);
+
+    const [bcgImage, setBcgImage] = React.useState('/Images/background2.jpg');
+
+    React.useEffect(() => {
+        document.body.style.backgroundImage = `url(${bcgImage})`;
+
+    }, [bcgImage]);
     const navigate = useNavigate();
 
     React.useEffect(() => {
         (async () => {
             const querySnapshot = await getDocs(collection(db, 'users'));
             const values = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-
-            console.log(speciality);
-            const newAvailable = values.filter(user => user.spécialité.includes(speciality));
-            
-            console.log(newAvailable, date, time);
-            setAvailable(newAvailable);
+            console.log(date, time, speciality);
+            if (date && time && speciality) {
+                setMedecin([]); // Réinitialiser la liste des médecins
+                let newAvailable = values.filter(value => value.spécialité.includes(speciality));
+                newAvailable.forEach(element => {
+                    Object.entries(element.dates).forEach(([key, value]) => {
+                        if (key === date) {
+                            Object.entries(value).forEach(([key2, value2]) => {
+                                if (key2 === time) {
+                                    if (value2 === 'disponible') {
+                                        setMedecin(prevMedecin => [...prevMedecin, element.nom]);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+            console.log(medecin);
         })();
+        console.log(medecin);
+
     }, [speciality, date, time]);
 
 
@@ -35,16 +58,21 @@ function PriseRDV() {
 
     const changeDate = (event) => {
         const value = event.target.value;
-        console.log(value);
         setDate(value);
     }
 
     const changeTime = (event) => {
-        const value = event.target.text;
-        console.log(event.target[event.target.value - 1].text);
+        const value = event.target[event.target.value - 1].text;
         setTime(value);
     }
 
+    const changeBackground = () => {
+        setBcgImage('/Images/background.jpg');
+    };
+
+    const resetBackground = () => {
+        setBcgImage('/Images/background2.jpg');
+    };
     const goToSuiviRDV = (event) => {
         return navigate('/suiviRDV');
     }
@@ -57,7 +85,7 @@ function PriseRDV() {
                     <button className="Demande" onClick={goToSuiviRDV}>Suivi des demandes</button>
                 </div>
                 <div className='PriseRDV-jesuismedecin-Container'>
-                    <button className="PriseRDV-jesuismedecin">Je suis médecin</button>
+                    <button className="PriseRDV-jesuismedecin" onMouseOver={changeBackground} onMouseOut={resetBackground}>Je suis médecin</button>
                 </div>
             </div>
             <div className="PriseRDV-infos">
@@ -81,7 +109,11 @@ function PriseRDV() {
                         return <option value={id}>{timeRange}</option>
                     })}
                 </select>
-                <input className='input' type="text" placeholder="Médecin" />
+                <select>
+                    {medecin.map((medecin) => {
+                        return <option value={medecin}>{medecin}</option>
+                    })}
+                </select>
             </div>
             <div className="PriseRDV-image">
                 <p>Choisissez une date</p>
@@ -89,6 +121,8 @@ function PriseRDV() {
             <div className="PriseRDV-valider">
                 <p>Choisissez une date</p>
             </div>
+            {medecin}
+            <AjoutUsersDB />
         </div>
     );
 }
