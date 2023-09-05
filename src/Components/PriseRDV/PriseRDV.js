@@ -1,10 +1,37 @@
+import React from 'react';
 import { db } from '../../firebaseConfig'
 import './PriseRDV.css'
 
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, getDocs } from 'firebase/firestore'
 import times from "./time.json";
 
 function PriseRDV() {
+
+    const [available, setAvailable] = React.useState([]);
+    const [speciality, setSpeciality] = React.useState('');
+
+    React.useEffect(() => {
+        (async () => {
+            const querySnapshot = await getDocs(collection(db, 'users'));
+            const values = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+
+            console.log(speciality);
+            const newAvailable = values.filter(user => user.spécialité.includes(speciality));
+
+            console.log(newAvailable);
+            setAvailable(newAvailable);
+        })();
+    }, [speciality]);
+
+
+    const changeSpeciality = (event) => {
+        const value = event.target.value;
+        setSpeciality(value);
+    }
+
+
+
+
 
     return (
         <div className="PriseRDV">
@@ -12,7 +39,9 @@ function PriseRDV() {
             <div className="PriseRDV-infos">
                 <input className="input" type="text" placeholder="Nom" />
                 <input className="input" type="text" placeholder="Prénom" />
-                <select className='input'><option value="Cardiologue">Cardiologue</option>
+                <select className='input' onChange={changeSpeciality}>
+                    <option defaultValue disabled selected>Sélectionnez une spécialité</option>
+                    <option value="Cardiologue">Cardiologue</option>
                     <option value="Généraliste">Généraliste</option>
                     <option value="Pédiatre">Pédiatre</option>
                     <option value="Urologue">Urologue</option>
