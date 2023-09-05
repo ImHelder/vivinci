@@ -9,6 +9,8 @@ function PriseRDV() {
 
     const [available, setAvailable] = React.useState([]);
     const [speciality, setSpeciality] = React.useState('');
+    const [date, setDate] = React.useState('');
+    const [time, setTime] = React.useState('');
 
     React.useEffect(() => {
         (async () => {
@@ -17,16 +19,27 @@ function PriseRDV() {
 
             console.log(speciality);
             const newAvailable = values.filter(user => user.spécialité.includes(speciality));
-
-            console.log(newAvailable);
+            
+            console.log(newAvailable, date, time);
             setAvailable(newAvailable);
         })();
-    }, [speciality]);
+    }, [speciality, date, time]);
 
 
     const changeSpeciality = (event) => {
         const value = event.target.value;
         setSpeciality(value);
+    }
+
+    const changeDate = (event) => {
+        const value = event.target.value;
+        setDate(value);
+    }
+
+    const changeTime = (event) => {
+        const value = event.target.text;
+        console.log(event.target[event.target.value - 1].text);
+        setTime(value);
     }
 
 
@@ -49,8 +62,8 @@ function PriseRDV() {
                     <option value="Aide-soignant">Aide-soignant</option>
                     <option value="Allergologue">Allergologue</option>
                 </select>
-                <input className='input' type="date" placeholder="Date" />
-                <select className='input'>
+                <input className='input' type="date" placeholder="Date" onChange={changeDate} />
+                <select className='input' onChange={changeTime}>
                     {times.combinations.map(({ id, timeRange }) => {
                         return <option value={id}>{timeRange}</option>
                     })}
