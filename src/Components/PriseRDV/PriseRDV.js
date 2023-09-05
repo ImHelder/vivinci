@@ -26,7 +26,8 @@ function PriseRDV() {
         (async () => {
             const querySnapshot = await getDocs(collection(db, 'users'));
             const values = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-            console.log(date, time, speciality);
+            console.log(date, time, speciality, values);
+            console.log(typeof values[0].nom, typeof values[0].spécialité, typeof values[0].dates);
             if (date && time && speciality) {
                 setMedecin([]); // Réinitialiser la liste des médecins
                 let newAvailable = values.filter(value => value.spécialité.includes(speciality));

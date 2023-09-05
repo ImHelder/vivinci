@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PriseRDV from './Components/PriseRDV/PriseRDV';
 import SuiviRDV from './Components/SuiviRDV/SuiviRDV';
+import PageDoc from './Components/PageDoc/PageDoc';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +16,7 @@ root.render(
         <Route path="/" element={<PriseRDV/>} />
         <Route path="/test" element={<App/>} />
         <Route path="/suiviRDV" element={<SuiviRDV />} />
+        <Route path="/PageMedecin" element={<PageDoc />} />
       </Routes>
     </Router>
   </React.StrictMode>

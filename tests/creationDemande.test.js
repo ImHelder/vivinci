@@ -2,9 +2,7 @@ import { describe, expect, test } from '@jest/globals';
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../src/firebaseConfig'
 
-const checkIUserfHasFields = (user) => {
-  return !!user.nom && !!user.spécialité && !!user.dates;
-}
+
 
 describe('fetch medecin', () => {
   test('fetch all medecin', async () => {
@@ -22,6 +20,11 @@ describe('fetch medecin', () => {
   test('medecin should have fields', async () => {
     const getMedecin = await getDocs(collection(db, 'users'));
     const values = getMedecin.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-    return values.map(user => expect(checkIUserfHasFields(user)).toBeTruthy());
+    return values.forEach(user => {
+      expect(typeof user.nom).toBe('string');
+      expect(Array.isArray(user.spécialité)).toBe(true);
+      user.spécialité.forEach(speciality => {expect(typeof speciality).toBe('string');});
+      expect(typeof user.dates).toBe('object');
+    });
   });
 });
