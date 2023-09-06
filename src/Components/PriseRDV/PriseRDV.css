@@ -56,3 +56,16 @@
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+
+.PriseRDV-valider {
+    display: flex;
+    align-self: flex-end;
+}
+
+.prendreRDV {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 25px;
+    cursor: pointer;
+}

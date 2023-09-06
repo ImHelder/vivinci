@@ -2,7 +2,7 @@ import React from 'react';
 import { db } from '../../firebaseConfig'
 import './PriseRDV.css'
 
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, addDoc } from 'firebase/firestore'
 import times from "./time.json";
 import AjoutUsersDB from '../AddUsersDB/AddUsersDB';
 
@@ -13,7 +13,10 @@ function PriseRDV() {
     const [date, setDate] = React.useState('');
     const [time, setTime] = React.useState('');
     const [medecin, setMedecin] = React.useState([]);
-    const [clientId, setClientId] = React.useState('');
+    const [selectedMedecin, setSelectedMedecin] = React.useState({});
+    const [firstName, setFirstName] = React.useState('');
+    const [lastName, setLastName] = React.useState('');
+    const [clientId, setClientId] = React.useState(''); 
 
     const [bcgImage, setBcgImage] = React.useState('/Images/background2.jpg');
 
@@ -38,7 +41,7 @@ function PriseRDV() {
                             Object.entries(value).forEach(([key2, value2]) => {
                                 if (key2 === time) {
                                     if (value2 === 'disponible') {
-                                        setMedecin(prevMedecin => [...prevMedecin, element.nom]);
+                                        setMedecin(prevMedecin => [...prevMedecin, {nom: element.nom, id: element.id}]);
                                     }
                                 }
                             });
@@ -46,12 +49,15 @@ function PriseRDV() {
                     });
                 });
             }
-            console.log(medecin);
         })();
-        console.log(medecin);
-
     }, [speciality, date, time]);
 
+    React.useEffect(() => {
+        if(medecin.length > 0)
+            setSelectedMedecin(medecin[0].id);
+        else
+            setSelectedMedecin(null);
+    },[medecin]);
 
     const changeSpeciality = (event) => {
         const value = event.target.value;
@@ -84,7 +90,49 @@ function PriseRDV() {
     const changeClientId = (event) => {
         const value = event.target.value;
         setClientId(value);
-        console.log(value);
+    }
+
+    const changeMedecin = (event) => {
+        const value = event.target.value;
+        setSelectedMedecin(value);
+    }
+
+    const prendreRDV = async () => {
+        const demandeCollectionRef = collection(db, 'demandes');
+        const clientsCollectionRef = collection(db, 'clients');
+        const clients = await getDocs(clientsCollectionRef);
+        let userId = ""
+        const userExist = clients.docs.find(doc => doc.data().prenom === firstName && doc.data().nom === lastName);
+
+        if (!userExist) {
+            const document = await addDoc(clientsCollectionRef, {
+                nom: lastName,
+                prenom: firstName,
+            })
+            userId = document.id;
+        }
+
+        const addNewDemande = async () => {
+            await addDoc(demandeCollectionRef, {
+                idClient: userExist ? userExist.id : userId,
+                idMedecin: selectedMedecin,
+                date: date,
+                heure: time,
+                specialite: speciality,
+                etat: 'attente'
+            })
+        }
+        addNewDemande();
+    }
+
+    const changeFirstName = (event) => {
+        const value = event.target.value;
+        setFirstName(value);
+    }
+
+    const changeLastName = (event) => {
+        const value = event.target.value;
+        setLastName(value);
     }
 
     return (
@@ -99,8 +147,8 @@ function PriseRDV() {
                 </div>
             </div>
             <div className="PriseRDV-infos">
-                <input className="input" type="text" placeholder="Nom" />
-                <input className="input" type="text" placeholder="Prénom" />
+                <input className="input" type="text" placeholder="Nom" onChange={changeLastName} />
+                <input className="input" type="text" placeholder="Prénom" onChange={changeFirstName}/>
                 <select className='input' onChange={changeSpeciality}>
                     <option defaultValue disabled selected>Sélectionnez une spécialité</option>
                     <option value="Cardiologue">Cardiologue</option>
@@ -119,9 +167,9 @@ function PriseRDV() {
                         return <option value={id}>{timeRange}</option>
                     })}
                 </select>
-                <select>
-                    {medecin.map((medecin) => {
-                        return <option value={medecin}>{medecin}</option>
+                <select onChange={changeMedecin}>
+                    {medecin.map(({ id, nom }) => {
+                        return <option value={id} key={id}>{nom}</option>
                     })}
                 </select>
             </div>
@@ -129,9 +177,8 @@ function PriseRDV() {
                 <p>Choisissez une date</p>
             </div>
             <div className="PriseRDV-valider">
-                <p>Choisissez une date</p>
+                <button className='prendreRDV' onClick={prendreRDV}>Prendre rendez-vous</button>
             </div>
-            {medecin}
             <AjoutUsersDB />
         </div>
     );
