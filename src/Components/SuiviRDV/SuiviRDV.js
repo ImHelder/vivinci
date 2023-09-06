@@ -25,7 +25,7 @@ function SuiviRDV() {
             const _demandes = demandeSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, medecin: _medecins.find(medecin => medecin.id === doc.data().idMedecin), startHour: doc.data().heure.split("-")[0].split("h")[0], endHour: doc.data().heure.split("-")[1].split("h")[0] }));
 
             const userDemandes = _demandes.filter(demande => demande.idClient === location.state.clientId);
-            // const sortedDemands = userDemandes.sort((a, b) => new Date(b.date) - new Date(a.date));
+            // const sortedDemandsByDate = userDemandes.sort((a, b) => new Date(b.date) - new Date(a.date));
             setDemandes(userDemandes);
         })();
     }, []);
