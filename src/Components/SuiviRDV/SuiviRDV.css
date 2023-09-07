@@ -17,6 +17,7 @@
 
 .status {
     margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .oneDemande {
@@ -32,4 +33,11 @@
 
 .dateInfos {
     font-weight: bold;
+}
+
+.deleteIcon {
+    align-self: center;
+    margin-right: 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
 }
