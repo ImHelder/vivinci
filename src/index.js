@@ -7,18 +7,28 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PriseRDV from './Components/PriseRDV/PriseRDV';
 import SuiviRDV from './Components/SuiviRDV/SuiviRDV';
 import PageDoc from './Components/PageDoc/PageDoc';
+import { ThemeProvider, createTheme } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const theme = createTheme();
+
 root.render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<PriseRDV/>} />
-        <Route path="/test" element={<App/>} />
-        <Route path="/suiviRDV" element={<SuiviRDV />} />
-        <Route path="/PageMedecin" element={<PageDoc />} />
-      </Routes>
-    </Router>
+    <LocalizationProvider dateAdapter={AdapterMoment}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<PriseRDV/>} />
+            <Route path="/test" element={<App/>} />
+            <Route path="/suiviRDV" element={<SuiviRDV />} />
+            <Route path="/PageMedecin" element={<PageDoc />} />
+          </Routes>
+        </Router>
+      </ThemeProvider>
+    </LocalizationProvider>
   </React.StrictMode>
 );
 

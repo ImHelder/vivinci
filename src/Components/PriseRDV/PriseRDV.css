@@ -23,11 +23,6 @@
     margin-bottom: 20px;
 }
 
-.PriseRDV-jesuismedecin-Container {
-    align-self: flex-end;
-    justify-content: flex-end;
-}
-
 .PriseRDV-jesuismedecin {
     margin: 10px;
     padding: 10px;
@@ -46,16 +41,12 @@
 
 .DemandeItem {
     margin-left: auto;
-    height: 70px;
 }
 
 .inputClient {
-    height: 68px;
     width: 400px;
     border-radius: 15px;
-    border: 1px solid #7274b2;
-    transform: translate(0px, -4px);
-    margin-right: 15px;
+    background: white;
 }
 
 .PriseRDV-valider {
@@ -63,16 +54,16 @@
     align-self: flex-end;
 }
 
-
 .medecinContainer {
     display: flex;
 
 }
 .photo {
-    width: 70px; 
-    height: 70px; 
+    width: 60px; 
+    height: 60px; 
     margin-left: 10px;
     border-radius: 20%;
+    margin-top: 21px;
 }
 
 .select {
@@ -91,13 +82,25 @@
     border: 1px solid #7274b2;
 }
 
-.button{
+.button {
     background: linear-gradient(to right, #196BCA, #6433E0);
     background-color: #196BCA;
     color: white;
     border: 0;
     height: 70px;
     font-size: 24px;
-    border-radius: 15px;
+    text-transform: none;
+}
+
+.buttonText {
+    color: white;
+    font-size: 20px;
     padding: 0 20px;
+    text-transform: none;
+}
+
+.secondInput {
+    width: 600px;
+    background: white;
+    border-radius: 15px;
 }

@@ -5,6 +5,9 @@ import './PriseRDV.css'
 import { collection, getDocs, addDoc } from 'firebase/firestore'
 import times from "./time.json";
 import { useNavigate } from 'react-router-dom';
+import { Button, MenuItem, TextField } from '@mui/material';
+import { DateCalendar, DatePicker } from '@mui/x-date-pickers';
+import moment from 'moment';
 
 const getImage = (name) => {
     let image = "";
@@ -45,7 +48,7 @@ const getImage = (name) => {
 
 function PriseRDV() {
     const [speciality, setSpeciality] = React.useState('');
-    const [date, setDate] = React.useState('');
+    const [date, setDate] = React.useState(moment().format("YYYY-MM-DD"));
     const [time, setTime] = React.useState('');
     const [medecin, setMedecin] = React.useState([]);
     const [selectedMedecin, setSelectedMedecin] = React.useState({});
@@ -74,7 +77,7 @@ function PriseRDV() {
                     Object.entries(element.dates).forEach(([key, value]) => {
                         if (key === date) {
                             Object.entries(value).forEach(([key2, value2]) => {
-                                if (key2 === time) {
+                                if (key2 === times.combinations.find(({ id }) => id === time).timeRange) {
                                     if (value2 === 'disponible') {
                                         setMedecin(prevMedecin => [...prevMedecin, { nom: element.nom, id: element.id }]);
                                     }
@@ -105,14 +108,8 @@ function PriseRDV() {
         setSpeciality(value);
     }
 
-    const changeDate = (event) => {
-        const value = event.target.value;
-        setDate(value);
-    }
-
     const changeTime = (event) => {
-        const value = event.target[event.target.value - 1].text;
-        setTime(value);
+        setTime(event.target.value);
     }
 
     const changeBackground = () => {
@@ -162,7 +159,7 @@ function PriseRDV() {
                 idClient: userExist ? userExist.id : userId,
                 idMedecin: selectedMedecin,
                 date: date,
-                heure: time,
+                heure: times.combinations.find(({ id }) => id === time).timeRange,
                 specialite: speciality,
                 etat: 'attente',
                 client: `${lastName} ${firstName}`
@@ -187,43 +184,110 @@ function PriseRDV() {
             <div className="header">
 
                 <div className='PriseRDV-jesuismedecin-Container'>
-                    <button className="PriseRDV-jesuismedecin button" onMouseOver={changeBackground} onMouseOut={resetBackground} onClick={() => navigate('/PageMedecin')}>Je suis médecin</button>
+                    <Button style={{ borderRadius: 15, marginTop: 20 }} className="button" onMouseOver={changeBackground} onMouseOut={resetBackground} onClick={() => navigate('/PageMedecin')}><p className='buttonText'>Je suis médecin</p></Button>
                 </div>
             </div>
             <div className="PriseRDV-infos">
-                <input className="input" type="text" placeholder="Nom" onChange={changeLastName} />
-                <input className="input" type="text" placeholder="Prénom" onChange={changeFirstName} />
-                <select className='input' onChange={changeSpeciality}>
-                    <option defaultValue disabled selected>Sélectionnez une spécialité</option>
-                    <option value="Cardiologue">Cardiologue</option>
-                    <option value="Généraliste">Généraliste</option>
-                    <option value="Pédiatre">Pédiatre</option>
-                    <option value="Urologue">Urologue</option>
-                    <option value="Neurologue">Neurologue</option>
-                    <option value="Radiologue">Radiologue</option>
-                    <option value="Chiurgien">Chiurgien</option>
-                    <option value="Aide-soignant">Aide-soignant</option>
-                    <option value="Allergologue">Allergologue</option>
-                </select>
-                <input className='input' type="date" placeholder="Date" min={new Date().toISOString().slice(0, 10)} onChange={changeDate} />
-                <select className='input' onChange={changeTime}>
+                <TextField 
+                    InputProps={{ sx: { borderRadius: 3 } }}
+                    className="secondInput" 
+                    variant="outlined"
+                    label="Nom"
+                    value={lastName} 
+                    required
+                    onChange={changeLastName} 
+                />
+                <TextField 
+                    InputProps={{ sx: { borderRadius: 3 } }}
+                    className="secondInput" 
+                    variant="outlined"
+                    label="Prénom"
+                    value={firstName} 
+                    required
+                    onChange={changeFirstName} 
+                    sx={{marginTop: 3}}
+                />
+                <TextField 
+                    InputProps={{ sx: { borderRadius: 3 } }}
+                    className="secondInput" 
+                    variant="outlined"
+                    label="Spécialité"
+                    value={speciality} 
+                    required
+                    onChange={changeSpeciality} 
+                    select
+                    sx={{marginTop: 3}}
+                >
+                    <MenuItem defaultValue disabled selected>Sélectionnez une spécialité</MenuItem>
+                    <MenuItem value="Cardiologue">Cardiologue</MenuItem>
+                    <MenuItem value="Généraliste">Généraliste</MenuItem>
+                    <MenuItem value="Pédiatre">Pédiatre</MenuItem>
+                    <MenuItem value="Urologue">Urologue</MenuItem>
+                    <MenuItem value="Neurologue">Neurologue</MenuItem>
+                    <MenuItem value="Radiologue">Radiologue</MenuItem>
+                    <MenuItem value="Chiurgien">Chiurgien</MenuItem>
+                    <MenuItem value="Aide-soignant">Aide-soignant</MenuItem>
+                    <MenuItem value="Allergologue">Allergologue</MenuItem>
+                </TextField>
+
+                <DatePicker 
+                    label="Date du rendez-vous" 
+                    value={moment(date)} 
+                    minDate={moment()} 
+                    format='YYYY-MM-DD'
+                    onChange={(value) => setDate(value.format("YYYY-MM-DD"))}
+                    sx={{ backgroundColor: 'white', maxWidth: 600, marginTop: 3, borderRadius: 2 }}
+                />               
+                <TextField 
+                    InputProps={{ sx: { borderRadius: 3 } }}
+                    className="secondInput" 
+                    variant="outlined"
+                    label="Choisir un horaire"
+                    value={time} 
+                    required
+                    onChange={changeTime} 
+                    select
+                    sx={{marginTop: 3}}
+                >
                     {times.combinations.map(({ id, timeRange }) => {
-                        return <option value={id}>{timeRange}</option>
+                        return <MenuItem value={id}>{timeRange}</MenuItem>
                     })}
-                </select>
+                </TextField>
+                
+        
                 <div className='medecinContainer'>
-                    <select className='input' onChange={changeMedecin}>
+                    <TextField 
+                        InputProps={{ sx: { borderRadius: 3 } }}
+                        className="secondInput" 
+                        variant="outlined"
+                        label="Choisir un médecin"
+                        value={selectedMedecin} 
+                        required
+                        onChange={changeMedecin} 
+                        select
+                        sx={{marginTop: 3, marginBottom: 3}}
+                    >
                         {medecin.map(({ id, nom }) => {
-                            return <option value={nom} key={id}>{nom}</option>
+                            return <MenuItem value={nom} key={id}>{nom}</MenuItem>
                         })}
-                    </select>
+                    </TextField>
                     <img className='photo' src={getImage(selectedMedecin)} alt='medecin' />
                 </div>
+
                 <div className="ligneDemande">
-                    <button className='prendreRDV input button' onClick={prendreRDV}>Prendre rendez-vous</button>
+                    <Button style={{ borderRadius: 15 }} className='input button' onClick={prendreRDV}><p className='buttonText'>Prendre rendez-vous</p></Button>
                     <div className="DemandeItem">
-                        <input className="inputClient" type="text" onChange={changeClientId} placeholder="ID du client" />
-                        <button className="Demande button" onClick={goToSuiviRDV}>Suivi des demandes</button>
+                        <TextField 
+                            InputProps={{ sx: { borderRadius: 3 } }}
+                            className="inputClient" 
+                            variant="outlined"
+                            label="ID du client"
+                            value={clientId} 
+                            required
+                            onChange={changeClientId} 
+                            sx={{marginRight: 3}}
+                        />
+                        <Button style={{ borderRadius: 15}} className="button" onClick={goToSuiviRDV}><p className='buttonText'>Suivi des demandes</p></Button>
                     </div>
                 </div>
             </div>
