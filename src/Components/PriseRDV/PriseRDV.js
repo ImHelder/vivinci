@@ -187,7 +187,7 @@ function PriseRDV() {
             <div className="header">
 
                 <div className='PriseRDV-jesuismedecin-Container'>
-                    <button className="PriseRDV-jesuismedecin" onMouseOver={changeBackground} onMouseOut={resetBackground} onClick={() => navigate('/PageMedecin')}>Je suis médecin</button>
+                    <button className="PriseRDV-jesuismedecin button" onMouseOver={changeBackground} onMouseOut={resetBackground} onClick={() => navigate('/PageMedecin')}>Je suis médecin</button>
                 </div>
             </div>
             <div className="PriseRDV-infos">
@@ -205,7 +205,7 @@ function PriseRDV() {
                     <option value="Aide-soignant">Aide-soignant</option>
                     <option value="Allergologue">Allergologue</option>
                 </select>
-                <input className='input' type="date" placeholder="Date" min={new Date().toISOString().slice(0,10)} onChange={changeDate} />
+                <input className='input' type="date" placeholder="Date" min={new Date().toISOString().slice(0, 10)} onChange={changeDate} />
                 <select className='input' onChange={changeTime}>
                     {times.combinations.map(({ id, timeRange }) => {
                         return <option value={id}>{timeRange}</option>
@@ -219,10 +219,12 @@ function PriseRDV() {
                     </select>
                     <img className='photo' src={getImage(selectedMedecin)} alt='medecin' />
                 </div>
+                <div className="ligneDemande">
                     <button className='prendreRDV input button' onClick={prendreRDV}>Prendre rendez-vous</button>
-                <div className="demandeContainer">
-                    <input className="inputClient" type="text" onChange={changeClientId} placeholder="ID du client" />
-                    <button className="Demande button" onClick={goToSuiviRDV}>Suivi des demandes</button>
+                    <div className="DemandeItem">
+                        <input className="inputClient" type="text" onChange={changeClientId} placeholder="ID du client" />
+                        <button className="Demande button" onClick={goToSuiviRDV}>Suivi des demandes</button>
+                    </div>
                 </div>
             </div>
         </div>
