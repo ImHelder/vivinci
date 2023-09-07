@@ -9,21 +9,38 @@ on:
   pull_request:
     branches: ["main"]
 
+
+
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '18'
           cache: "npm"
-      - run: npm install
-      - run: npm run test
+      - name: installnpm
+        run: npm install
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: "npm"
+      - name: installnpm
+        run: npm install
+      - name: test db Users
+        run: npm run test -- tests/dbusers.test.js --json --outputFile=test-results.json
+      - name: test add db Clients
+        run: npm run test -- tests/dbclients-add.test.js --json --outputFile=test-results.json
+      - name: test add db Demandes
+        run: npm run test -- tests/dbdemandes-add.test.js --json --outputFile=test-results.json
+      - name: test delete db Clients
+        run: npm run test -- tests/dbclients-delete.test.js --json --outputFile=test-results.json
+      - name: test delete db Demandes
+        run: npm run test -- tests/dbdemandes-delete.test.js --json --outputFile=test-results.json
