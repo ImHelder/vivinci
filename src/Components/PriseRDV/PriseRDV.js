@@ -39,6 +39,7 @@ const getImage = (id) => {
             image = "/Images/clara.jpeg";
             break;
         default:
+            image = "Images/image.png";
             break;
     }
     return image;
