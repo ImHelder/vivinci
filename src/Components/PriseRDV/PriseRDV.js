@@ -201,7 +201,7 @@ function PriseRDV() {
                     <option value="Urologue">Urologue</option>
                     <option value="Neurologue">Neurologue</option>
                     <option value="Radiologue">Radiologue</option>
-                    <option value="Chiurgien">Chiurgien</option>
+                    <option value="Chirurgien">Chirurgien</option>
                     <option value="Aide-soignant">Aide-soignant</option>
                     <option value="Allergologue">Allergologue</option>
                 </select>
