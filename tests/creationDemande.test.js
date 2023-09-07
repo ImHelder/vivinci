@@ -36,7 +36,7 @@ describe('fetch medecin', () => {
       expect(typeof demande.heure).toBe('string');
       expect(typeof demande.idClient).toBe('string');
       expect(typeof demande.idMedecin).toBe('string');
-      expect(demande.specialite).toBe("string");
+      expect(typeof demande.specialite).toBe("string");
       expect(typeof demande.dates).toBe('string');
     });
   });
