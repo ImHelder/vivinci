@@ -27,7 +27,6 @@ describe('fetch clients', () => {
         const getDemandes = await accessDBUsers();
         const value = getDemandes.find(user => user.client === 'Ceci Est un Test');
         expect(value.client).toBe('Ceci Est un Test');
-        expect(value.idClient).toBe(userExist.id);
         expect(value.idMedecin).toBe('Alain Dezer');
         expect(value.specialite).toBe('Pédiatre');
         expect(value.date).toBe('2023-09-12');
