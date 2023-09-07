@@ -11,6 +11,5 @@ describe('fetch clients', () => {
         const userNotExist = await getDocs(collection(db, 'clients'))
         const userNotExists = userNotExist.docs.find(doc => doc.data().prenom === 'Ceci' && doc.data().nom === 'Est un Test');
         expect(userNotExists).toBeUndefined();
-        await db.close();
     });
 });
