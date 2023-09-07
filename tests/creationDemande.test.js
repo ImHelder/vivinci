@@ -27,4 +27,17 @@ describe('fetch medecin', () => {
       expect(typeof user.dates).toBe('object');
     });
   });
+
+  test('demande should have fields', async () => {
+    const getDemandes = await getDocs(collection(db, 'demandes'));
+    const demandes = getDemandes.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    return demandes.forEach(demande => {
+      expect(typeof demande.etat).toBe('string');
+      expect(typeof demande.heure).toBe('string');
+      expect(typeof demande.idClient).toBe('string');
+      expect(typeof demande.idMedecin).toBe('string');
+      expect(demande.specialite).toBe("string");
+      expect(typeof demande.dates).toBe('string');
+    });
+  });
 });
