@@ -105,7 +105,7 @@ function SuiviRDV() {
             )}
            {demandes.valide?.length > 0 && (
                 <div className='title'>
-                    <h2>Demande en validée</h2>
+                    <h2>Demande validée</h2>
                     {demandes.valide?.map(demande => (
                         <OneDemande demande={demande} options={options} deleteDemande={deleteDemande} />
                     ))}
@@ -113,7 +113,7 @@ function SuiviRDV() {
             )}
             {demandes.refuse?.length > 0 && (
                 <div className='title'>
-                    <h2>Demande en refusée</h2>
+                    <h2>Demande refusée</h2>
                     {demandes.refuse?.map(demande => (
                         <OneDemande demande={demande} options={options} deleteDemande={deleteDemande} />
                     ))}
