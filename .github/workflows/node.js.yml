@@ -34,5 +34,9 @@ jobs:
           cache: "npm"
       - name: installnpm
         run: npm install
-      - name: test additions
-        run: npm run test -- tests/addition.test.js --json --outputFile=test-results.json
+      - name: test db Users
+        run: npm run test -- tests/dbusers.test.js --json --outputFile=test-results.json
+      - name: test db Clients
+        run: npm run test -- tests/dbclients.test.js --json --outputFile=test-results.json
+      - name: test db Demandes
+        run: npm run test -- tests/dbdemandes.test.js --json --outputFile=test-results.json
