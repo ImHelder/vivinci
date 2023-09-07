@@ -4,38 +4,36 @@ import './PriseRDV.css'
 
 import { collection, getDocs, addDoc } from 'firebase/firestore'
 import times from "./time.json";
-import AjoutUsersDB from '../AddUsersDB/AddUsersDB';
-
 import { useNavigate } from 'react-router-dom';
 
-const getImage = (id) => {
+const getImage = (name) => {
     let image = "";
-    switch (id) {
-        case "32dovk1ffJ2YrSnKEt6Q":
+    switch (name) {
+        case "David Sarah":
             image = "/Images/david.jpeg";
             break;
-        case "3y83Oetp1Oef931t1ZWi":
+        case "Sylvie Taurin":
             image = "/Images/sylvie.jpeg";
             break;
-        case "BLYSmedARIljWJ99ml9V":
+        case "Alain Dezer":
             image = "/Images/alain.jpeg";
             break;
-        case "GYbUoa7xaErFRFgKxrEB":
+        case "Aurelien Baly":
             image = "/Images/aurelien.jpeg";
             break;
-        case "fRJj6e1scbTPH7Ja3wTS":
+        case "Dorianne Salma":
             image = "/Images/dorianne.jpeg";
             break;
-        case "nge786w02nLGtVRKY282":
+        case "Christianne Denia":
             image = "/Images/christianne.jpeg";
             break;
-        case "pmgSNTXxSUHPUvTZseiH":
+        case "Daniel Ferrara":
             image = "/Images/daniel.jpg";
             break;
-        case "wvhQXB1bHkrjxyTOIuPm":
+        case "Marc Paular":
             image = "/Images/marc.jpeg";
             break;
-        case "xHJWC8zEwl41vPG05lYE":
+        case "Clara Soiy":
             image = "/Images/clara.jpeg";
             break;
         default:
@@ -95,7 +93,6 @@ function PriseRDV() {
     }, [speciality, date, time]);
 
     React.useEffect(() => {
-        console.log(medecin);
         if (medecin.length > 0)
             setSelectedMedecin(medecin[0].nom);
 
@@ -215,10 +212,9 @@ function PriseRDV() {
                     })}
                 </select>
                 <div className='medecinContainer'>
-
                     <select className='input' onChange={changeMedecin}>
                         {medecin.map(({ id, nom }) => {
-                            return <option value={id} key={id}>{nom}</option>
+                            return <option value={nom} key={id}>{nom}</option>
                         })}
                     </select>
                     <img className='photo' src={getImage(selectedMedecin)} alt='medecin' />

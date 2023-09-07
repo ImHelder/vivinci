@@ -87,8 +87,6 @@ function SuiviRDV() {
         navigate("/");
     }
 
-    console.log("demandes", demandes)
-
     return (
         <div className="SuiviRDV">
             <div className='customHeader'>
