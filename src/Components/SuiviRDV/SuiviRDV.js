@@ -121,33 +121,6 @@ function SuiviRDV() {
                     ))}
                 </div>
             )}
-            {demandes.map(demande => (
-                <div className='oneDemande'>
-                    {/* <div className='deleteIcon'>
-                        {demande.etat === "attente" && (
-                            <DeleteIcon onClick={() => deleteDemande(demande.id)} />
-                        )}
-                    </div> */}
-
-                    <div className='oneDemandeInfos'>
-                        <p className='dateInfos'>{new Date(demande.date).toLocaleDateString("fr-FR", options)} / {demande.heure} </p>
-                        <p className='medecinInfos'>{demande?.medecin?.nom || demande.idMedecin} / {demande.specialite}</p>
-                        <p className='clientInfos'> </p>
-                        <div className='status'>
-                            {demande.etat === "attente" ? (
-                                <HourglassBottomIcon />
-                            ) : demande.etat === "refuse" ? (
-                                <BlockIcon />
-                            ) : demande.etat === "accepte" ? (
-                                <CheckCircleIcon />
-                            ) : (
-                                <p>Pas de statut</p>
-                            )}
-                        </div>
-                    </div>
-
-                </div>
-            ))}
         </div>
     );
 }
