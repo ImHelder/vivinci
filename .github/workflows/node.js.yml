@@ -36,7 +36,11 @@ jobs:
         run: npm install
       - name: test db Users
         run: npm run test -- tests/dbusers.test.js --json --outputFile=test-results.json
-      - name: test db Clients
-        run: npm run test -- tests/dbclients.test.js --json --outputFile=test-results.json
-      - name: test db Demandes
-        run: npm run test -- tests/dbdemandes.test.js --json --outputFile=test-results.json
+      - name: test add db Clients
+        run: npm run test -- tests/dbclients-add.test.js --json --outputFile=test-results.json
+      - name: test add db Demandes
+        run: npm run test -- tests/dbdemandes-add.test.js --json --outputFile=test-results.json
+      - name: test delete db Clients
+        run: npm run test -- tests/dbclients-delete.test.js --json --outputFile=test-results.json
+      - name: test delete db Demandes
+        run: npm run test -- tests/dbdemandes-delete.test.js --json --outputFile=test-results.json
