@@ -1,5 +1,3 @@
-
-
 .PriseRDV {
     display: flex;
     flex-direction: column;
@@ -8,18 +6,21 @@
 .PriseRDV-infos {
     display: flex;
     flex-direction: column;
-    max-width: 500px;
     margin: 10px;
     padding: 10px;
 }
 
 .input {
-    width: 500px;
-    height: 80px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 0 10px;
-    margin-bottom: 10px;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 600px;
+    height: 70px;
+    border-radius: 15px;
+    border: 1px solid #7274b2;
+    padding-left: 10px;
+    margin-bottom: 20px;
 }
 
 .PriseRDV-jesuismedecin-Container {
@@ -63,25 +64,19 @@
 }
 
 .prendreRDV {
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
     font-size: 25px;
-    cursor: pointer;
 }
 
-.photo {
-    width: 100px; 
-    height: 100px; 
-    margin-right: 10px; 
-    border-radius: 20%;
-    object-fit: cover;
-}
 
 .medecinContainer {
     display: flex;
-    align-items: center;
-    justify-content: center;
+
+}
+.photo {
+    width: 70px; 
+    height: 70px; 
+    margin-left: 10px;
+    border-radius: 20%;
 }
 
 .select {
@@ -92,4 +87,17 @@
     padding: 0 10px;
     margin-bottom: 10px;
     margin-right: 10px;
+}
+.prendreRDV{
+    width: 600px;
+    height: 70px;
+    border-radius: 15px;
+    border: 1px solid #7274b2;
+}
+
+.button{
+    background: linear-gradient(to right, #196BCA, #6433E0);
+    background-color: #196BCA;
+    color: white;
+    border: 0;
 }

@@ -37,8 +37,7 @@ const OneDemande = ({ demande, options, deleteDemande }) => (
 function SuiviRDV() {
 
     const [demandes, setDemandes] = React.useState([]);
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -57,11 +56,11 @@ function SuiviRDV() {
             const groups = sortedDemandsByDate.reduce((acc, demande) => {
                 const date = new Date(demande.date).toLocaleDateString("fr-FR");
                 if (!acc[date]) {
-                  acc[date] = [];
+                    acc[date] = [];
                 }
                 acc[date].push(demande);
                 return acc;
-              }, {});
+            }, {});
 
             const sortedDemandByHour = Object.entries(groups).map(([key, value]) => value.sort((a, b) => b.startHour - a.startHour)).flat();
 
@@ -122,6 +121,33 @@ function SuiviRDV() {
                     ))}
                 </div>
             )}
+            {demandes.map(demande => (
+                <div className='oneDemande'>
+                    {/* <div className='deleteIcon'>
+                        {demande.etat === "attente" && (
+                            <DeleteIcon onClick={() => deleteDemande(demande.id)} />
+                        )}
+                    </div> */}
+
+                    <div className='oneDemandeInfos'>
+                        <p className='dateInfos'>{new Date(demande.date).toLocaleDateString("fr-FR", options)} / {demande.heure} </p>
+                        <p className='medecinInfos'>{demande?.medecin?.nom || demande.idMedecin} / {demande.specialite}</p>
+                        <p className='clientInfos'> </p>
+                        <div className='status'>
+                            {demande.etat === "attente" ? (
+                                <HourglassBottomIcon />
+                            ) : demande.etat === "refuse" ? (
+                                <BlockIcon />
+                            ) : demande.etat === "accepte" ? (
+                                <CheckCircleIcon />
+                            ) : (
+                                <p>Pas de statut</p>
+                            )}
+                        </div>
+                    </div>
+
+                </div>
+            ))}
         </div>
     );
 }

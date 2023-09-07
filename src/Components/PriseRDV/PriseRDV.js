@@ -53,7 +53,7 @@ function PriseRDV() {
     const [selectedMedecin, setSelectedMedecin] = React.useState({});
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
-    const [clientId, setClientId] = React.useState(''); 
+    const [clientId, setClientId] = React.useState('');
 
     const [bcgImage, setBcgImage] = React.useState('/Images/background2.jpg');
 
@@ -65,36 +65,43 @@ function PriseRDV() {
 
     React.useEffect(() => {
         (async () => {
-            const querySnapshot = await getDocs(collection(db, 'users'));
-            const values = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-            console.log(date, time, speciality, values);
-            console.log(typeof values[0].nom, typeof values[0].spécialité, typeof values[0].dates);
+            const recupUsers = await getDocs(collection(db, 'users'));
+            const users = recupUsers.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+            const recupDemandes = await getDocs(collection(db, 'demandes'));
+            const demandes = recupDemandes.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             if (date && time && speciality) {
                 setMedecin([]); // Réinitialiser la liste des médecins
-                let newAvailable = values.filter(value => value.spécialité.includes(speciality));
+                let newAvailable = users.filter(value => value.spécialité.includes(speciality));
                 newAvailable.forEach(element => {
                     Object.entries(element.dates).forEach(([key, value]) => {
                         if (key === date) {
                             Object.entries(value).forEach(([key2, value2]) => {
                                 if (key2 === time) {
                                     if (value2 === 'disponible') {
-                                        setMedecin(prevMedecin => [...prevMedecin, {nom: element.nom, id: element.id}]);
+                                        setMedecin(prevMedecin => [...prevMedecin, { nom: element.nom, id: element.id }]);
                                     }
                                 }
                             });
                         }
                     });
                 });
+                demandes.forEach(element => {
+                    if (element.date === date && element.heure === time && element.etat === 'accepte') {
+                        setMedecin(prevMedecin => prevMedecin.filter(medecin => medecin.nom !== element.idMedecin));
+                    }
+                });
             }
         })();
     }, [speciality, date, time]);
 
     React.useEffect(() => {
-        if(medecin.length > 0)
-            setSelectedMedecin(medecin[0].id);
+        console.log(medecin);
+        if (medecin.length > 0)
+            setSelectedMedecin(medecin[0].nom);
+
         else
             setSelectedMedecin(null);
-    },[medecin]);
+    }, [medecin]);
 
     const changeSpeciality = (event) => {
         const value = event.target.value;
@@ -120,7 +127,7 @@ function PriseRDV() {
     };
 
     const goToSuiviRDV = (event) => {
-        if(clientId.length < 3) return;
+        if (clientId.length < 3) return;
         return navigate('/suiviRDV', { state: { clientId } });
     }
 
@@ -135,7 +142,7 @@ function PriseRDV() {
     }
 
     const prendreRDV = async () => {
-        if(firstName.length < 1 || lastName.length < 1 || !selectedMedecin || !date || !time || !speciality) {
+        if (firstName.length < 1 || lastName.length < 1 || !selectedMedecin || !date || !time || !speciality) {
             alert('Veuillez remplir tous les champs');
             return;
         };
@@ -160,7 +167,8 @@ function PriseRDV() {
                 date: date,
                 heure: time,
                 specialite: speciality,
-                etat: 'attente'
+                etat: 'attente',
+                client: `${lastName} ${firstName}`
             })
         }
         addNewDemande();
@@ -180,17 +188,14 @@ function PriseRDV() {
     return (
         <div className="PriseRDV">
             <div className="header">
-                <div className="demandeContainer">
-                    <input className="inputClient" type="text" onChange={changeClientId} placeholder="ID du client" />
-                    <button className="Demande" onClick={goToSuiviRDV}>Suivi des demandes</button>
-                </div>
+
                 <div className='PriseRDV-jesuismedecin-Container'>
-                    <button className="PriseRDV-jesuismedecin" onMouseOver={changeBackground} onMouseOut={resetBackground}>Je suis médecin</button>
+                    <button className="PriseRDV-jesuismedecin" onMouseOver={changeBackground} onMouseOut={resetBackground} onClick={() => navigate('/PageMedecin')}>Je suis médecin</button>
                 </div>
             </div>
             <div className="PriseRDV-infos">
                 <input className="input" type="text" placeholder="Nom" onChange={changeLastName} />
-                <input className="input" type="text" placeholder="Prénom" onChange={changeFirstName}/>
+                <input className="input" type="text" placeholder="Prénom" onChange={changeFirstName} />
                 <select className='input' onChange={changeSpeciality}>
                     <option defaultValue disabled selected>Sélectionnez une spécialité</option>
                     <option value="Cardiologue">Cardiologue</option>
@@ -210,21 +215,20 @@ function PriseRDV() {
                     })}
                 </select>
                 <div className='medecinContainer'>
-                    <select className='select' onChange={changeMedecin}>
+
+                    <select className='input' onChange={changeMedecin}>
                         {medecin.map(({ id, nom }) => {
-                            return  <option value={id} key={id}><p>{nom}</p></option>
+                            return <option value={id} key={id}>{nom}</option>
                         })}
                     </select>
                     <img className='photo' src={getImage(selectedMedecin)} alt='medecin' />
                 </div>
+                    <button className='prendreRDV input button' onClick={prendreRDV}>Prendre rendez-vous</button>
+                <div className="demandeContainer">
+                    <input className="inputClient" type="text" onChange={changeClientId} placeholder="ID du client" />
+                    <button className="Demande button" onClick={goToSuiviRDV}>Suivi des demandes</button>
+                </div>
             </div>
-            <div className="PriseRDV-image">
-                <p>Choisissez une date</p>
-            </div>
-            <div className="PriseRDV-valider">
-                <button className='prendreRDV' onClick={prendreRDV}>Prendre rendez-vous</button>
-            </div>
-            <AjoutUsersDB />
         </div>
     );
 }

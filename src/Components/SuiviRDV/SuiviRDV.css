@@ -1,3 +1,11 @@
+body {
+    background-image: url(../../../public/Images/background2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Trebuchet MS;
+}
+
 .SuiviRDV {
     display: flex;
     flex-direction: column;
@@ -6,18 +14,23 @@
 }
 
 .oneDemandeInfos {
-    display: flex;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    background-color: #FB027F;
-    justify-content: space-around;
-    width: 600px;
+    display: grid;
+    grid-template-columns: 4fr 4fr 2fr 1fr;
+    padding: 8px 20px;
+    justify-content: space-between;
+    width: 800px;
+    background: linear-gradient(to right, #196BCA, #6433E0);
+    background-color: #196BCA;
+    color: white;
+    border: 0;
+    border-radius: 20px;
+    box-shadow: 5px 7px 13px 0px rgba(0, 0, 0, 0.5);
+    margin-bottom: 15px;
 }
 
 .status {
-    margin-left: 10px;
-    margin-bottom: 10px;
+    justify-self: center;
+    align-self: center;
 }
 
 .oneDemande {
@@ -29,6 +42,7 @@
 .medecinInfos {
     margin-left: 10px;
     font-weight: bold;
+    justify-content: start;
 }
 
 .dateInfos {
