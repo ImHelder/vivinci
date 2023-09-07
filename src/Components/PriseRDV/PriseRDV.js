@@ -98,6 +98,10 @@ function PriseRDV() {
     }
 
     const prendreRDV = async () => {
+        if(firstName.length < 1 || lastName.length < 1 || !selectedMedecin || !date || !time || !speciality) {
+            alert('Veuillez remplir tous les champs');
+            return;
+        };
         const demandeCollectionRef = collection(db, 'demandes');
         const clientsCollectionRef = collection(db, 'clients');
         const clients = await getDocs(clientsCollectionRef);
@@ -123,6 +127,7 @@ function PriseRDV() {
             })
         }
         addNewDemande();
+        alert(`Votre demande a bien été prise en compte, voici votre ID pour accéder à vos réservations : ${userExist?.id || userId}`);
     }
 
     const changeFirstName = (event) => {
