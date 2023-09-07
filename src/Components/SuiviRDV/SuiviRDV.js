@@ -2,7 +2,7 @@ import React from 'react';
 import { db } from '../../firebaseConfig'
 import './SuiviRDV.css'
 import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -14,6 +14,8 @@ function SuiviRDV() {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     const location = useLocation();
+    const navigate = useNavigate();
+
 
     React.useEffect(() => {
         (async () => {
@@ -46,9 +48,18 @@ function SuiviRDV() {
         setDemandes(demandes.filter(demande => demande.id !== demandeId));
     };
 
+    const goBack = () => {
+        navigate("/");
+    }
+
     return (
         <div className="SuiviRDV">
-            <h1>Suivi de vos demandes</h1>
+            <div className='customHeader'>
+                <div className='containerButton'>
+                    <button className='goBackButton' onClick={goBack}>Retour</button>
+                </div>
+                <h1>Suivi de vos demandes</h1>
+            </div>
             {demandes.map(demande => (
                 <div className='oneDemande'>
                     {/* <div className='deleteIcon'>
