@@ -23,7 +23,7 @@ describe('fetch medecin', () => {
     return values.forEach(user => {
       expect(typeof user.nom).toBe('string');
       expect(Array.isArray(user.spécialité)).toBe(true);
-      user.spécialité.forEach(speciality => {expect(typeof speciality).toBe('string');});
+      user.spécialité.forEach(speciality => { expect(typeof speciality).toBe('string'); });
       expect(typeof user.dates).toBe('object');
     });
   });
@@ -39,5 +39,8 @@ describe('fetch medecin', () => {
       expect(typeof demande.specialite).toBe("string");
       expect(typeof demande.date).toBe('string');
     });
+  });
+  test('adds 5 + 7 to equal 12', () => {
+    expect(5 + 8).toBe(12);
   });
 });
