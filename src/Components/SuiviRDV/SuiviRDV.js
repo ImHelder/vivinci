@@ -8,6 +8,32 @@ import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+
+const OneDemande = ({ demande, options, deleteDemande }) => (
+    <div className='oneDemande'>
+        <div className='deleteIcon'>
+            {demande.etat === "attente" && (
+                <DeleteIcon onClick={() => deleteDemande(demande.id)} />
+            )}
+        </div>
+        <div className='oneDemandeInfos'>
+            <p className='dateInfos'>{new Date(demande.date).toLocaleDateString("fr-FR", options)} / {demande.heure} </p>
+            <p className='medecinInfos'>{demande?.medecin?.nom || demande.idMedecin} / {demande.specialite}</p>
+        </div>
+        <div className='status'>
+            {demande.etat === "attente" ? (
+                <HourglassBottomIcon />
+            ) : demande.etat === "refuse" ? (
+                <BlockIcon />
+            ) : demande.etat === "accepte" ? (
+                <CheckCircleIcon />
+            ) : (
+                <p>Pas de statut</p>
+            )}
+        </div>
+    </div>
+)
+
 function SuiviRDV() {
 
     const [demandes, setDemandes] = React.useState([]);
@@ -38,7 +64,17 @@ function SuiviRDV() {
               }, {});
 
             const sortedDemandByHour = Object.entries(groups).map(([key, value]) => value.sort((a, b) => b.startHour - a.startHour)).flat();
-            setDemandes(sortedDemandByHour);
+
+            const groupDemandesByStatus = sortedDemandByHour.reduce((acc, demande) => {
+                const status = demande.etat;
+                if (!acc[status]) {
+                  acc[status] = [];
+                }
+                acc[status].push(demande);
+                return acc;
+              }, {});
+
+            setDemandes(groupDemandesByStatus);
         })();
     }, []);
 
@@ -52,6 +88,8 @@ function SuiviRDV() {
         navigate("/");
     }
 
+    console.log("demandes", demandes)
+
     return (
         <div className="SuiviRDV">
             <div className='customHeader'>
@@ -60,30 +98,30 @@ function SuiviRDV() {
                 </div>
                 <h1>Suivi de vos demandes</h1>
             </div>
-            {demandes.map(demande => (
-                <div className='oneDemande'>
-                    <div className='deleteIcon'>
-                        {demande.etat === "attente" && (
-                            <DeleteIcon onClick={() => deleteDemande(demande.id)} />
-                        )}
-                    </div>
-                    <div className='oneDemandeInfos'>
-                        <p className='dateInfos'>{new Date(demande.date).toLocaleDateString("fr-FR", options)} / {demande.heure} </p>
-                        <p className='medecinInfos'>{demande?.medecin?.nom || demande.idMedecin} / {demande.specialite}</p>
-                    </div>
-                    <div className='status'>
-                        {demande.etat === "attente" ? (
-                            <HourglassBottomIcon />
-                        ) : demande.etat === "refuse" ? (
-                            <BlockIcon />
-                        ) : demande.etat === "accepte" ? (
-                            <CheckCircleIcon />
-                        ) : (
-                            <p>Pas de statut</p>
-                        )}
-                    </div>
+           {demandes.attente?.length > 0 && (
+                <div className='ttile'>
+                    <h2>Demande en attente</h2>
+                    {demandes.attente?.map(demande => (
+                        <OneDemande demande={demande} options={options} deleteDemande={deleteDemande} />
+                    ))}
                 </div>
-           ))}
+            )}
+           {demandes.valide?.length > 0 && (
+                <div className='ttile'>
+                    <h2>Demande en validée</h2>
+                    {demandes.valide?.map(demande => (
+                        <OneDemande demande={demande} options={options} deleteDemande={deleteDemande} />
+                    ))}
+                </div>
+            )}
+            {demandes.refuse?.length > 0 && (
+                <div className='ttile'>
+                    <h2>Demande en refusée</h2>
+                    {demandes.refuse?.map(demande => (
+                        <OneDemande demande={demande} options={options} deleteDemande={deleteDemande} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
