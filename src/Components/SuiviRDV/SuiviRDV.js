@@ -38,7 +38,7 @@ function SuiviRDV() {
               }, {});
 
             const sortedDemandByHour = Object.entries(groups).map(([key, value]) => value.sort((a, b) => b.startHour - a.startHour)).flat();
-            setDemandes(userDemandes);
+            setDemandes(sortedDemandByHour);
         })();
     }, []);
 

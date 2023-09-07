@@ -202,7 +202,7 @@ function PriseRDV() {
                     <option value="Aide-soignant">Aide-soignant</option>
                     <option value="Allergologue">Allergologue</option>
                 </select>
-                <input className='input' type="date" placeholder="Date" onChange={changeDate} />
+                <input className='input' type="date" placeholder="Date" min={new Date().toISOString().slice(0,10)} onChange={changeDate} />
                 <select className='input' onChange={changeTime}>
                     {times.combinations.map(({ id, timeRange }) => {
                         return <option value={id}>{timeRange}</option>
