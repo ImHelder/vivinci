@@ -51,11 +51,11 @@ function SuiviRDV() {
             <h1>Suivi de vos demandes</h1>
             {demandes.map(demande => (
                 <div className='oneDemande'>
-                    <div className='deleteIcon'>
+                    {/* <div className='deleteIcon'>
                         {demande.etat === "attente" && (
                             <DeleteIcon onClick={() => deleteDemande(demande.id)} />
                         )}
-                    </div>
+                    </div> */}
                     <div className='oneDemandeInfos'>
                         <p className='dateInfos'>{new Date(demande.date).toLocaleDateString("fr-FR", options)} / {demande.heure} </p>
                         <p className='medecinInfos'>{demande?.medecin?.nom || demande.idMedecin} / {demande.specialite}</p>
