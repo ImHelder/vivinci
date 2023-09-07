@@ -32,5 +32,7 @@ jobs:
         with:
           node-version: '18'
           cache: "npm"
-      - run: npm install
-      - run: npm run test
+      - name: installnpm
+        run: npm install
+      - name: test additions
+        run: npm run test --tests/addition.test.js --json --outputFile=test-results.json
