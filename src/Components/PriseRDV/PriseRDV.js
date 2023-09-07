@@ -8,6 +8,42 @@ import AjoutUsersDB from '../AddUsersDB/AddUsersDB';
 
 import { useNavigate } from 'react-router-dom';
 
+const getImage = (id) => {
+    let image = "";
+    switch (id) {
+        case "32dovk1ffJ2YrSnKEt6Q":
+            image = "/Images/david.jpeg";
+            break;
+        case "3y83Oetp1Oef931t1ZWi":
+            image = "/Images/sylvie.jpeg";
+            break;
+        case "BLYSmedARIljWJ99ml9V":
+            image = "/Images/alain.jpeg";
+            break;
+        case "GYbUoa7xaErFRFgKxrEB":
+            image = "/Images/aurelien.jpeg";
+            break;
+        case "fRJj6e1scbTPH7Ja3wTS":
+            image = "/Images/dorianne.jpeg";
+            break;
+        case "nge786w02nLGtVRKY282":
+            image = "/Images/christianne.jpeg";
+            break;
+        case "pmgSNTXxSUHPUvTZseiH":
+            image = "/Images/daniel.jpg";
+            break;
+        case "wvhQXB1bHkrjxyTOIuPm":
+            image = "/Images/marc.jpeg";
+            break;
+        case "xHJWC8zEwl41vPG05lYE":
+            image = "/Images/clara.jpeg";
+            break;
+        default:
+            break;
+    }
+    return image;
+}
+
 function PriseRDV() {
     const [speciality, setSpeciality] = React.useState('');
     const [date, setDate] = React.useState('');
@@ -172,11 +208,14 @@ function PriseRDV() {
                         return <option value={id}>{timeRange}</option>
                     })}
                 </select>
-                <select onChange={changeMedecin}>
-                    {medecin.map(({ id, nom }) => {
-                        return <option value={id} key={id}>{nom}</option>
-                    })}
-                </select>
+                <div className='medecinContainer'>
+                    <select className='select' onChange={changeMedecin}>
+                        {medecin.map(({ id, nom }) => {
+                            return  <option value={id} key={id}><p>{nom}</p></option>
+                        })}
+                    </select>
+                    <img className='photo' src={getImage(selectedMedecin)} alt='medecin' />
+                </div>
             </div>
             <div className="PriseRDV-image">
                 <p>Choisissez une date</p>
