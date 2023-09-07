@@ -35,4 +35,4 @@ jobs:
       - name: installnpm
         run: npm install
       - name: test additions
-        run: npm run test --tests/addition.test.js --json --outputFile=test-results.json
+        run: npm run test -- tests/addition.test.js --json --outputFile=test-results.json
