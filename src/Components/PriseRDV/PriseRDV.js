@@ -209,7 +209,7 @@ function PriseRDV() {
                     className="secondInput" 
                     variant="outlined"
                     label="Spécialité"
-                    value={speciality} 
+                    value={speciality}
                     required
                     onChange={changeSpeciality} 
                     select
