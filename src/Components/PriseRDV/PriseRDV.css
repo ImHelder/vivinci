@@ -111,3 +111,10 @@
     margin-left: 70px;
     margin-top: 25px;
 }
+
+.datePicker {
+    border-radius: 4px;
+    background: white;
+    max-width: 600px;
+    margin-top: 50px;
+}

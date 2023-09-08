@@ -234,7 +234,8 @@ function PriseRDV() {
                     minDate={moment()} 
                     format='YYYY-MM-DD'
                     onChange={(value) => setDate(value.format("YYYY-MM-DD"))}
-                    sx={{ backgroundColor: 'white', maxWidth: 600, marginTop: 3, borderRadius: 2 }}
+                    className="datePicker"
+                    sx={{ marginTop: 3 }}
                 />               
                 <TextField 
                     InputProps={{ sx: { borderRadius: 3 } }}
