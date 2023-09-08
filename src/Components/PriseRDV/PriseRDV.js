@@ -182,10 +182,7 @@ function PriseRDV() {
     return (
         <div className="PriseRDV">
             <div className="header">
-
-                <div className='PriseRDV-jesuismedecin-Container'>
-                    <Button style={{ borderRadius: 15, marginTop: 20 }} className="button" onMouseOver={changeBackground} onMouseOut={resetBackground} onClick={() => navigate('/PageMedecin')}><p className='buttonText'>Je suis médecin</p></Button>
-                </div>
+                <Button style={{ borderRadius: 15, marginTop: 20 }} className="button" onMouseOver={changeBackground} onMouseOut={resetBackground} onClick={() => navigate('/PageMedecin')}><p className='buttonText'>Je suis médecin</p></Button>
             </div>
             <div className="PriseRDV-infos">
                 <TextField 
