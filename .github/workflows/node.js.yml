@@ -23,6 +23,8 @@ jobs:
           cache: "npm"
       - name: installnpm
         run: npm install
+      - name: deploy on firebase
+        run: firebase deploy
   test:
     runs-on: ubuntu-latest
     steps:
