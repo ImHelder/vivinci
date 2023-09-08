@@ -2,6 +2,7 @@ import React from 'react';
 import { db } from '../../firebaseConfig'
 import { collection, doc, getDocs, updateDoc } from 'firebase/firestore'
 import { Block, CheckCircleOutline, Close, Done } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 
 const OneDemande = ({ demande, accepterDemande, options }) => (
@@ -35,6 +36,8 @@ const OneDemande = ({ demande, accepterDemande, options }) => (
 function PageDoc() {
     const [demandes, setDemandes] = React.useState([]);
     const [reload, setReload] = React.useState(0);
+    const navigate = useNavigate();
+
 
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -67,13 +70,19 @@ function PageDoc() {
         setReload(reload + 1);
     };
 
+    const goBack = () => {
+        navigate("/");
+    }
+
     return (
         <div>
-            <h1>PageDoc</h1>
-
+            <div className='customHeader'>
+                <button className='goBackButton' onClick={goBack}>Retour</button>
+                <h1>PageDoc</h1>
+            </div>
             {demandes.attente?.length > 0 && (
                 <div className='title'>
-                    <h2>Demande en attente</h2>
+                    <h2>Demandes en attente</h2>
                     {demandes.attente?.map(demande => (
                         <OneDemande demande={demande} options={options} accepterDemande={accepterDemande} />
                     ))}
@@ -81,7 +90,7 @@ function PageDoc() {
             )}
            {demandes.accepte?.length > 0 && (
                 <div className='title'>
-                    <h2>Demande validée</h2>
+                    <h2>Demandes validées</h2>
                     {demandes.accepte?.map(demande => (
                         <OneDemande demande={demande} options={options} accepterDemande={accepterDemande} />
                     ))}
@@ -89,7 +98,7 @@ function PageDoc() {
             )}
             {demandes.refuse?.length > 0 && (
                 <div className='title'>
-                    <h2>Demande refusée</h2>
+                    <h2>Demandes refusées</h2>
                     {demandes.refuse?.map(demande => (
                         <OneDemande demande={demande} options={options} accepterDemande={accepterDemande} />
                     ))}

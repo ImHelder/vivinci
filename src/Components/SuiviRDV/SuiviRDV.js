@@ -20,16 +20,16 @@ const OneDemande = ({ demande, options, deleteDemande }) => (
             <p className='dateInfos'>{new Date(demande.date).toLocaleDateString("fr-FR", options)} / {demande.heure} </p>
             <p className='medecinInfos'>{demande?.medecin?.nom || demande.idMedecin} / {demande.specialite}</p>
             <div className='status'>
-            {demande.etat === "attente" ? (
-                <HourglassBottomIcon />
-            ) : demande.etat === "refuse" ? (
-                <BlockIcon />
-            ) : demande.etat === "accepte" ? (
-                <CheckCircleIcon />
-            ) : (
-                <p>Pas de statut</p>
-            )}
-        </div>
+                {demande.etat === "attente" ? (
+                    <HourglassBottomIcon />
+                ) : demande.etat === "refuse" ? (
+                    <BlockIcon />
+                ) : demande.etat === "accepte" ? (
+                    <CheckCircleIcon />
+                ) : (
+                    <p>Pas de statut</p>
+                )}
+            </div>
         </div>
     </div>
 )
@@ -90,14 +90,12 @@ function SuiviRDV() {
     return (
         <div className="SuiviRDV">
             <div className='customHeader'>
-                <div className='containerButton'>
-                    <button className='goBackButton' onClick={goBack}>Retour</button>
-                </div>
+                <button className='goBackButton' onClick={goBack}>Retour</button>
                 <h1>Suivi de vos demandes</h1>
             </div>
            {demandes.attente?.length > 0 && (
                 <div className='title'>
-                    <h2>Demande en attente</h2>
+                    <h2>Demandes en attente</h2>
                     {demandes.attente?.map(demande => (
                         <OneDemande demande={demande} options={options} deleteDemande={deleteDemande} />
                     ))}
@@ -105,7 +103,7 @@ function SuiviRDV() {
             )}
            {demandes.accepte?.length > 0 && (
                 <div className='title'>
-                    <h2>Demande validée</h2>
+                    <h2>Demandes validées</h2>
                     {demandes.accepte?.map(demande => (
                         <OneDemande demande={demande} options={options} deleteDemande={deleteDemande} />
                     ))}
@@ -113,7 +111,7 @@ function SuiviRDV() {
             )}
             {demandes.refuse?.length > 0 && (
                 <div className='title'>
-                    <h2>Demande refusée</h2>
+                    <h2>Demandes refusées</h2>
                     {demandes.refuse?.map(demande => (
                         <OneDemande demande={demande} options={options} deleteDemande={deleteDemande} />
                     ))}
