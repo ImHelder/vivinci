@@ -19,8 +19,7 @@ const OneDemande = ({ demande, options, deleteDemande }) => (
         <div className='oneDemandeInfos'>
             <p className='dateInfos'>{new Date(demande.date).toLocaleDateString("fr-FR", options)} / {demande.heure} </p>
             <p className='medecinInfos'>{demande?.medecin?.nom || demande.idMedecin} / {demande.specialite}</p>
-        </div>
-        <div className='status'>
+            <div className='status'>
             {demande.etat === "attente" ? (
                 <HourglassBottomIcon />
             ) : demande.etat === "refuse" ? (
@@ -30,6 +29,7 @@ const OneDemande = ({ demande, options, deleteDemande }) => (
             ) : (
                 <p>Pas de statut</p>
             )}
+        </div>
         </div>
     </div>
 )
@@ -103,10 +103,10 @@ function SuiviRDV() {
                     ))}
                 </div>
             )}
-           {demandes.valide?.length > 0 && (
+           {demandes.accepte?.length > 0 && (
                 <div className='title'>
                     <h2>Demande validée</h2>
-                    {demandes.valide?.map(demande => (
+                    {demandes.accepte?.map(demande => (
                         <OneDemande demande={demande} options={options} deleteDemande={deleteDemande} />
                     ))}
                 </div>

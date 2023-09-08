@@ -6,7 +6,7 @@ import { collection, getDocs, addDoc } from 'firebase/firestore'
 import times from "./time.json";
 import { useNavigate } from 'react-router-dom';
 import { Button, MenuItem, TextField } from '@mui/material';
-import { DateCalendar, DatePicker } from '@mui/x-date-pickers';
+import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment';
 
 const getImage = (name) => {
