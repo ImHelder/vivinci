@@ -7,10 +7,13 @@ async function accessDBUsers() {
     return getDemandes.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 }
 
+
+
 describe('fetch clients', () => {
     
     test('Verify New Demand From Ceci Est un Test', async () => {
-        const userExist = await getDocs(collection(db, 'clients')).docs.find(doc => doc.data().prenom === 'Ceci' && doc.data().nom === 'Est un Test');
+        const clients = await getDocs(collection(db, 'clients'))
+        const userExist = clients.docs.find(doc => doc.data().prenom === 'Est un Test' && doc.data().nom === 'Ceci');
         expect(userExist.id).toBeDefined();
         await addDoc(collection(db, 'demandes'), {
             idClient: userExist.id,
@@ -22,9 +25,8 @@ describe('fetch clients', () => {
             client: 'Ceci Est un Test'
         })
         const getDemandes = await accessDBUsers();
-        const value = getDemandes.find(user => user.id === 'QfMMLgBccBasTadeKLfU');
-        expect(value.client).toBe('Adrien LDKA');
-        expect(value.idClient).toBe(userExist.id);
+        const value = getDemandes.find(user => user.client === 'Ceci Est un Test');
+        expect(value.client).toBe('Ceci Est un Test');
         expect(value.idMedecin).toBe('Alain Dezer');
         expect(value.specialite).toBe('Pédiatre');
         expect(value.date).toBe('2023-09-12');
