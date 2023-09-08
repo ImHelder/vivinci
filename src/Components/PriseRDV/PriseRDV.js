@@ -182,6 +182,7 @@ function PriseRDV() {
     return (
         <div className="PriseRDV">
             <div className="header">
+                <img className="logo" src="/Images/Vivinci5.png" alt="logo" />
                 <Button style={{ borderRadius: 15, marginTop: 20 }} className="button" onMouseOver={changeBackground} onMouseOut={resetBackground} onClick={() => navigate('/PageMedecin')}><p className='buttonText'>Je suis médecin</p></Button>
             </div>
             <div className="PriseRDV-infos">
