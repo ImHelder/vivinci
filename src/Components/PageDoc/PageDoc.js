@@ -76,8 +76,10 @@ function PageDoc() {
 
     return (
         <div>
+            <img className="logo2" src="/Images/Vivinci5.png" alt="logo" />
             <div className='customHeader'>
                 <button className='goBackButton' onClick={goBack}>Retour</button>
+                
                 <h1>PageDoc</h1>
             </div>
             {demandes.attente?.length > 0 && (
