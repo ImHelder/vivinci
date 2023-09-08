@@ -19,6 +19,8 @@ const OneDemande = ({ demande, options, deleteDemande }) => (
         <div className='oneDemandeInfos'>
             <p className='dateInfos'>{new Date(demande.date).toLocaleDateString("fr-FR", options)} / {demande.heure} </p>
             <p className='medecinInfos'>{demande?.medecin?.nom || demande.idMedecin} / {demande.specialite}</p>
+
+            <div className='title'> </div>
             <div className='status'>
                 {demande.etat === "attente" ? (
                     <HourglassBottomIcon />
