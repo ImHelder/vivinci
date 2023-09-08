@@ -105,3 +105,9 @@
     background: white;
     border-radius: 15px;
 }
+
+.logo {
+    height: 150px;
+    margin-left: 70px;
+    margin-top: 25px;
+}
